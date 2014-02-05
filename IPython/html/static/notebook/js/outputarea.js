@@ -583,6 +583,7 @@ var IPython = (function (IPython) {
 
     OutputArea.prototype.append_text = function (data, md, element, extra_class) {
         var type = 'text/plain';
+	var lineCount = getLineCount(data);
         var toinsert = this.create_output_subarea(md, "output_text", type);
         // escape ANSI & HTML specials in plaintext:
         data = utils.fixConsole(data);
@@ -591,11 +592,26 @@ var IPython = (function (IPython) {
         if (extra_class){
             toinsert.addClass(extra_class);
         }
+	data += "Line Count " + lineCount;
         toinsert.append($("<pre/>").html(data));
         element.append(toinsert);
     };
 
 
+    function getLineCount(data) {
+	var dataLen = data.length;
+	var i = 0;
+	var j = 0;
+	while(i !== dataLen){
+	    if (data[i] === '\n'){
+		j++;
+	    }
+	    i++;
+	}
+	return j;
+    };
+
+    
     OutputArea.prototype.append_svg = function (svg, md, element) {
         var type = 'image/svg+xml';
         var toinsert = this.create_output_subarea(md, "output_svg", type);
