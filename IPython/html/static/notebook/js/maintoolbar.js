@@ -105,7 +105,7 @@ var IPython = (function (IPython) {
                 },
                 {
                     id : 'interrupt_b',
-                    label : 'Interrupt',
+                    label : 'STOP NOW!!!',
                     icon : 'icon-stop',
                     callback : function () {
                         IPython.notebook.session.interrupt_kernel();
