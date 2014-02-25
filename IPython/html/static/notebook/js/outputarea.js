@@ -595,6 +595,33 @@ var IPython = (function (IPython) {
 	data += "Line Count " + lineCount;
         toinsert.append($("<pre/>").html(data));
         element.append(toinsert);
+
+	// Create a canvas and append it to the output_subarea.
+	var canvas = document.createElement('canvas');
+	canvas.id     = "canvas1";
+	canvas.width  = 800;
+	canvas.height = 400;
+	canvas.resize;
+	toinsert.append(canvas);
+	
+	// Some test html insertion
+	var test = $('<div>test123</div>').addClass('test');
+	var test2 = $('<p>test</p>').addClass('moretests');
+	toinsert.append(test).append(test2);
+	
+
+	// import the paper.js lib
+	var s = document.createElement("script");
+	s.type = "text/javascript";
+	s.src = "/static/notebook/js/paper.js";
+	toinsert.append(s);
+
+	// add the javascript contained in myScript.js
+	var q = document.createElement("script");
+	q.type = "text/javascript";
+	q.src = "/static/notebook/js/myScript.js";
+	q.data
+	toinsert.append(q);
     };
 
 
