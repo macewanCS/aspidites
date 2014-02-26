@@ -592,62 +592,65 @@ var IPython = (function (IPython) {
         if (extra_class){
             toinsert.addClass(extra_class);
         }
-
-
-	var pri = data;
-	var r = [];
-	if (pri.search("TURTLE" != -1)){
-	    pri = pri.replace(/\n/g, " ").split(" ");
-	  
-	    for(var i = 0; i < pri.length; i++){
-		
-		if(pri[i] === "TURTLE"){
-		    i++;
-		    r.push(pri[i]);
-		    i++;
-		    r.push(pri[i]);			   
+	// if user imported turtle class create canvas and process requests
+	if(data.search("TURTLE") != -1){
+	    var dataSafe = data;
+	    var newData = [];
+	    var pri = [];
+	    var j = 0;
+	    var r = [];
+	    dataSafe = dataSafe.split("\n");
+	    for(var i = 0; i < dataSafe.length; i++){
+		if(dataSafe[i].search("TURTLE") == -1){
+		    if( i != dataSafe.length -1){
+			dataSafe[i] += "\n";
+		    }
+		    newData += dataSafe[i];
+		}
+		else if (dataSafe[i].search("TURTLE") != -1){
+		    j = 0;
+		    pri = dataSafe[i].split(" ");
+		    r.push(pri[j+1]);
+		    r.push(pri[j+2]);			   
 		}
 	    }
-	    var turtletest = $('<div\>').addClass('test123');
-	    turtletest.append(r.join()).hide();
-	    toinsert.append(turtletest);
+	    var turtleCoordInfo = $('<div\>').addClass('turtle-coordinates');
+	    turtleCoordInfo.append(r.join()).hide();
+	    toinsert.append(turtleCoordInfo);
+
+	    // Create a canvas and append it to the output_subarea.
+	    var canvas = document.createElement('canvas');
+	    canvas.id     = "canvas1";
+	    canvas.width  = 800;
+	    canvas.height = 800;
+	    canvas.resize;
+	    toinsert.append(canvas);
+	    
+	    // import the paper.js lib
+	    var s = document.createElement("script");
+	    s.type = "text/javascript";
+	    s.src = "/static/notebook/js/paper.js";
+	    toinsert.append(s);
+
+	    // add the javascript contained in myScript.js
+	    var q = document.createElement("script");
+	    q.type = "text/javascript";
+	    q.src = "/static/notebook/js/myScript.js";
+	    q.data
+	    toinsert.append(q);
+	    
+	    var lineCount = getLineCount(newData);
+	    data = newData;
+	    data += "Line Count " + lineCount;
+            toinsert.append($("<pre/>").html(data));
+            element.append(toinsert);
 	}
-
-
-	data += "Line Count " + lineCount;
-        toinsert.append($("<pre/>").html(data));
-        element.append(toinsert);
-
-
-
-
-
-	// Create a canvas and append it to the output_subarea.
-	var canvas = document.createElement('canvas');
-	canvas.id     = "canvas1";
-	canvas.width  = 800;
-	canvas.height = 400;
-	canvas.resize;
-	toinsert.append(canvas);
-	
-	// Some test html insertion
-/*	var test = $('<div>test123</div>').addClass('test');
-	var test2 = $('<p>test</p>').addClass('moretests');
-	toinsert.append(test).append(test2);*/
-	
-
-	// import the paper.js lib
-	var s = document.createElement("script");
-	s.type = "text/javascript";
-	s.src = "/static/notebook/js/paper.js";
-	toinsert.append(s);
-
-	// add the javascript contained in myScript.js
-	var q = document.createElement("script");
-	q.type = "text/javascript";
-	q.src = "/static/notebook/js/myScript.js";
-	q.data
-	toinsert.append(q);
+	else {
+	    var lineCount = getLineCount(data);
+	    data += "Line Count " + lineCount;
+            toinsert.append($("<pre/>").html(data));
+            element.append(toinsert);
+	}
     };
 
 

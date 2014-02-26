@@ -39,7 +39,7 @@ paper.view.draw();
 */
 
 
-var d = ($(".test123")).text().replace(/\n/g, ",").split(",");
+var d = ($(".turtle-coordinates")).text().replace(/\n/g, ",").split(",");
 
 var c = document.getElementById('canvas1');
 paper.setup(c);
