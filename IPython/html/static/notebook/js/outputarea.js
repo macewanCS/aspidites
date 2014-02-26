@@ -592,9 +592,35 @@ var IPython = (function (IPython) {
         if (extra_class){
             toinsert.addClass(extra_class);
         }
+
+
+	var pri = data;
+	var r = [];
+	if (pri.search("TURTLE" != -1)){
+	    pri = pri.replace(/\n/g, " ").split(" ");
+	  
+	    for(var i = 0; i < pri.length; i++){
+		
+		if(pri[i] === "TURTLE"){
+		    i++;
+		    r.push(pri[i]);
+		    i++;
+		    r.push(pri[i]);			   
+		}
+	    }
+	    var turtletest = $('<div\>').addClass('test123');
+	    turtletest.append(r.join()).hide();
+	    toinsert.append(turtletest);
+	}
+
+
 	data += "Line Count " + lineCount;
         toinsert.append($("<pre/>").html(data));
         element.append(toinsert);
+
+
+
+
 
 	// Create a canvas and append it to the output_subarea.
 	var canvas = document.createElement('canvas');
@@ -605,9 +631,9 @@ var IPython = (function (IPython) {
 	toinsert.append(canvas);
 	
 	// Some test html insertion
-	var test = $('<div>test123</div>').addClass('test');
+/*	var test = $('<div>test123</div>').addClass('test');
 	var test2 = $('<p>test</p>').addClass('moretests');
-	toinsert.append(test).append(test2);
+	toinsert.append(test).append(test2);*/
 	
 
 	// import the paper.js lib

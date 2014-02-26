@@ -5,13 +5,13 @@ class Turtle:
           
 
     def __init__(self):
-        self.posX = 0
-        self.posY = 0
+        self.posX = 1
+        self.posY = 1
         self.bearing = 0
 
     def right(self, num):
         self.bearing -= num
-        self.bearing = self.bearing%360 
+        self.bearing = self.bearing%360
         self.printTurtle()
 
     def left(self, num):
@@ -30,10 +30,7 @@ class Turtle:
         self.printTurtle()
 
     def printTurtle(self):
-        print "X " + str(self.posX)
-        print "Y " + str(self.posY)
-        print "B " + str(self.bearing)
-        print "\n"
+        print "TURTLE" + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.bearing);
 
     def home(self):
         self.posX = 0
