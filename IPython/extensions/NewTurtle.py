@@ -5,8 +5,8 @@ class Turtle:
           
 
     def __init__(self):
-        self.posX = 1
-        self.posY = 1
+        self.posX = 200
+        self.posY = 200
         self.bearing = 0
 
     def right(self, num):
@@ -21,12 +21,13 @@ class Turtle:
 
     def forward(self, num):
         self.posX += num * math.cos(math.radians(self.bearing))
-        self.posY += num * math.sin(math.radians(self.bearing))
+        self.posY -= num * math.sin(math.radians(self.bearing))
         self.printTurtle()
 
     def backward(self, num):
+        # if self.bearing < 180 and self.bearing > 0:
         self.posX -= num * math.cos(math.radians(self.bearing))
-        self.posY -= num * math.sin(math.radians(self.bearing))
+        self.posY += num * math.sin(math.radians(self.bearing))
         self.printTurtle()
 
     def printTurtle(self):

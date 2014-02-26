@@ -45,16 +45,12 @@ var c = document.getElementById('canvas1');
 paper.setup(c);
 var path = new paper.Path();
 path.strokeColor = 'black';
-var start = new paper.Point(0, 0);
-path.moveTo(start);
-var x = 0;
-var y = 0;
+
+var x = 200;
+var y = 200;
+var start = new paper.Point(x, y);
 
 for(var i = 0; i < d.length + 1;){
-    /*var b = parseInt(d[2]);*/
-    
-    path.moveTo(start);
-    alert(start);
 
     path.lineTo(start.add([ x, y ]));
     paper.view.draw();
