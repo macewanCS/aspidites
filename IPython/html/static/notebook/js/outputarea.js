@@ -611,7 +611,8 @@ var IPython = (function (IPython) {
 		    j = 0;
 		    pri = dataSafe[i].split(" ");
 		    r.push(pri[j+1]);
-		    r.push(pri[j+2]);			   
+		    r.push(pri[j+2]);	
+		    r.push(pri[j+3]); //NATHAN		   
 		}
 	    }
 	    var turtleCoordInfo = $('<div\>').addClass('turtle-coordinates');
