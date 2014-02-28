@@ -4,6 +4,7 @@ myScript.js handles turtle animation using the canvas tool and the paper.js scri
 
 
 var c = document.getElementById('canvas1');
+document.getElementById("canvas1").style.background =' 	#99CCFF';
 paper.setup(c);
 
 /*
@@ -68,6 +69,7 @@ var newRotation;
 
 // counts each turtle command
 var count = 0;
+var changRot;
 
 // initial function call
 nextCount();
@@ -83,15 +85,26 @@ function nextCount(){
 	 oldRotation = getValue(count,3);
 	 newX = getValue(count,4);
 	 newY = getValue(count,5);
- 	 newRotation = getValue(count,6);
+ 	 changRot = getValue(count,6);
 	 count++;
 
+
+	
+
+
+
 // Good test command to see what the input is from the string
- //alert("old:"+oldX +" "+ oldY + " " + oldRotation + " New:" + newX + " " +newY + " " + newRotation);
+// alert("old:"+oldX +" "+ oldY + " " + oldRotation + " New:" + newX + " " +newY + " " + newRotation+ " " + changRot);
 }
 
 //builds the initial turtle icon
 if(turtleShow==1){
+
+		
+		var tail = new paper.Path.RegularPolygon(new paper.Point(oldX-11,oldY), 3, 3);
+		tail.rotate(30);
+		tail.fillColor = turtleColour;
+
 		var circlePoint = new paper.Point(oldX, oldY);
 
 		var circle1 = new paper.Path.Circle(circlePoint, 10);
@@ -126,6 +139,9 @@ if(turtleShow==1){
 
 
 
+
+
+
 /*
 The onFrame function does all the drawing, its called every frame at roughly
 30-60fps
@@ -135,7 +151,9 @@ paper.view.onFrame = function(event) {
 
 	var changX =Math.abs(oldX-newX);
 	var changY =Math.abs(oldY-newY);
-
+	
+	
+	
 	// the frame variables outline how much in which direction, this allows
 	// the turtle to take the shortest route
 	var frameX;
@@ -149,45 +167,49 @@ paper.view.onFrame = function(event) {
 	}
 	// make ratio for Y
 	else if (changX < changY){
-		frameY = (changY/changX);
-		frameX = 1;
+		frameX = (changX/changY);
+		frameY = 1;
 	}
 	// make ratio for X
 	else{
-		frameX = (changX/changY);
-		frameY = 1;	
+		
+		frameY = (changY/changX);
+		frameX = 1;
+	
 	}
 	
 	
+	
 	//rotate turtle, current is the exact centre of the turtle
-	if (oldRotation != newRotation && turtleShow==1){
+	if (  changRot != 0 && turtleShow==1){
 
 
 		var current = new paper.Point(oldX, oldY);
 		
 
-		if(oldRotation > newRotation){		
+		if(changRot < 0){		
 	
-		oldRotation -= rotateSpeed;
-		circle1.rotate(rotateSpeed,current);
-		circle2.rotate(rotateSpeed,current);
-		circle3.rotate(rotateSpeed,current);
-		circle4.rotate(rotateSpeed,current);
-		circle5.rotate(rotateSpeed,current);
-		circle6.rotate(rotateSpeed,current);
-
-
-		}
-		if(oldRotation < newRotation){
-
-		oldRotation += rotateSpeed;
-
+		changRot += rotateSpeed;
+		tail.rotate(-rotateSpeed,current);
 		circle1.rotate(-rotateSpeed,current);
 		circle2.rotate(-rotateSpeed,current);
 		circle3.rotate(-rotateSpeed,current);
 		circle4.rotate(-rotateSpeed,current);
 		circle5.rotate(-rotateSpeed,current);
-		circle6.rotate(-rotateSpeed,current);	
+		circle6.rotate(-rotateSpeed,current);
+
+
+		}
+		if(changRot > 0){
+
+		changRot -= rotateSpeed;
+		tail.rotate(rotateSpeed,current);		
+		circle1.rotate(rotateSpeed,current);
+		circle2.rotate(rotateSpeed,current);
+		circle3.rotate(rotateSpeed,current);
+		circle4.rotate(rotateSpeed,current);
+		circle5.rotate(rotateSpeed,current);
+		circle6.rotate(rotateSpeed,current);	
 
 
 		}
@@ -201,6 +223,7 @@ paper.view.onFrame = function(event) {
 		oldX += frameX;
 
 		if(turtleShow==1){
+			tail.translate(frameX,0);
 			circle1.translate(frameX,0);
 			circle2.translate(frameX,0);
 			circle3.translate(frameX,0);
@@ -209,14 +232,13 @@ paper.view.onFrame = function(event) {
 			circle6.translate(frameX,0);
 		}
 
-		//if(oldX>newX){
-		//	oldX=newX;
-		//}
+		
 	}
 
 	if (newY > oldY){
 		oldY += frameY;
 		if(turtleShow==1){
+			tail.translate(0,frameY);
 			circle1.translate(0,frameY);
 			circle2.translate(0,frameY);
 			circle3.translate(0,frameY);
@@ -225,14 +247,13 @@ paper.view.onFrame = function(event) {
 			circle6.translate(0,frameY);
 		}
 
-		//if(oldY> newY){
-		//	oldY=newY;
-		//}
+		
 	}
 
 	if (newX < oldX){
 		oldX -= frameX;
 		if(turtleShow==1){
+			tail.translate(-frameX,0);
 			circle1.translate(-frameX,0);
 			circle2.translate(-frameX,0);
 			circle3.translate(-frameX,0);
@@ -240,14 +261,13 @@ paper.view.onFrame = function(event) {
 			circle5.translate(-frameX,0);
 			circle6.translate(-frameX,0);
 		}
-		//if (oldX<newY){
-		//	oldX=newX;
-		//}
+		
 	}
 
 	if (newY < oldY){
 		oldY -=frameY;
 		if(turtleShow==1){
+			tail.translate(0,-frameY);
 			circle1.translate(0,-frameY);
 			circle2.translate(0,-frameY);
 			circle3.translate(0,-frameY);
@@ -256,13 +276,11 @@ paper.view.onFrame = function(event) {
 			circle6.translate(0,-frameY);
 		}
 	
-		//if (oldY< newY){
-		//	oldY=newY;
-		//}
+		
 	}
 	// prints the little circles every frame until we reach the correct point
 	// to create the line
-	if (newY != oldY || newX != oldX || oldRotation != newRotation){
+	if (newY != oldY || newX != oldX || changRot != 0){
 		var CP = new paper.Point(oldX, oldY);
 	
 		var centerCircle = new paper.Path.Circle(CP, lineSize);
