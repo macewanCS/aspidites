@@ -1,8 +1,6 @@
-
 /*
 myScript.js handles turtle animation using the canvas tool and the paper.js script
 */
-
 
 var c = document.getElementById('canvas1');
 var canvasSize = 800;
@@ -10,11 +8,12 @@ document.getElementById("canvas1").style.background =' 	#99CCFF';
 paper.setup(c);
 var grid = new paper.Path();
 
+/* adds grid for user to turn off / on, helps see what the turtle
+   is doing */
 document.getElementById('grid-element').onclick = function(){
     
     if(document.getElementById('grid-element').value=="OFF"){
 	document.getElementById('grid-element').value="ON";
-	//var grid = new paper.Path();
 	grid.strokeColor = 'grey';
 	var start = new paper.Point(1,1);
 	grid.moveTo(start);
@@ -32,7 +31,6 @@ document.getElementById('grid-element').onclick = function(){
 	}
 	paper.view.draw();
     }
-    /* still need to find way to remove the grid*/
     else{
 	document.getElementById('grid-element').value="OFF";
 	grid.clear();
@@ -118,20 +116,11 @@ function nextCount(){
 	 newY = getValue(count,5);
  	 changRot = getValue(count,6);
 	 count++;
-
-
-	
-
-
-
 // Good test command to see what the input is from the string
 // alert("old:"+oldX +" "+ oldY + " " + oldRotation + " New:" + newX + " " +newY + " " + newRotation+ " " + changRot);
 }
-
 //builds the initial turtle icon
 if(turtleShow==1){
-
-		
 		var tail = new paper.Path.RegularPolygon(new paper.Point(oldX-11,oldY), 3, 3);
 		tail.rotate(30);
 		tail.fillColor = turtleColour;
@@ -165,14 +154,7 @@ if(turtleShow==1){
 
 		var circle6 = new paper.Path.Circle(circlePoint, 5);
 		circle6.fillColor = turtleColour;
-
 	}
-
-
-
-
-
-
 /*
 The onFrame function does all the drawing, its called every frame at roughly
 30-60fps
@@ -182,8 +164,6 @@ paper.view.onFrame = function(event) {
 
 	var changX =Math.abs(oldX-newX);
 	var changY =Math.abs(oldY-newY);
-	
-	
 	
 	// the frame variables outline how much in which direction, this allows
 	// the turtle to take the shortest route
@@ -203,21 +183,14 @@ paper.view.onFrame = function(event) {
 	}
 	// make ratio for X
 	else{
-		
 		frameY = (changY/changX);
-		frameX = 1;
-	
+		frameX = 1;	
 	}
-	
-	
-	
+
 	//rotate turtle, current is the exact centre of the turtle
 	if (  changRot != 0 && turtleShow==1){
-
-
 		var current = new paper.Point(oldX, oldY);
 		
-
 		if(changRot < 0){		
 	
 		changRot += rotateSpeed;
@@ -228,7 +201,6 @@ paper.view.onFrame = function(event) {
 		circle4.rotate(-rotateSpeed,current);
 		circle5.rotate(-rotateSpeed,current);
 		circle6.rotate(-rotateSpeed,current);
-
 
 		}
 		if(changRot > 0){
@@ -241,18 +213,14 @@ paper.view.onFrame = function(event) {
 		circle4.rotate(rotateSpeed,current);
 		circle5.rotate(rotateSpeed,current);
 		circle6.rotate(rotateSpeed,current);	
-
-
 		}
 	}
 	//if turtle is off we have to manually set old rotation	
 	else{
 		oldRotation = newRotation;
 	}
-	
     	if (newX > oldX){
 		oldX += frameX;
-
 		if(turtleShow==1){
 			tail.translate(frameX,0);
 			circle1.translate(frameX,0);
@@ -262,10 +230,7 @@ paper.view.onFrame = function(event) {
 			circle5.translate(frameX,0);
 			circle6.translate(frameX,0);
 		}
-
-		
 	}
-
 	if (newY > oldY){
 		oldY += frameY;
 		if(turtleShow==1){
@@ -277,8 +242,7 @@ paper.view.onFrame = function(event) {
 			circle5.translate(0,frameY);
 			circle6.translate(0,frameY);
 		}
-
-		
+	
 	}
 
 	if (newX < oldX){
@@ -306,26 +270,18 @@ paper.view.onFrame = function(event) {
 			circle5.translate(0,-frameY);
 			circle6.translate(0,-frameY);
 		}
-	
-		
+			
 	}
 	// prints the little circles every frame until we reach the correct point
 	// to create the line
 	if (newY != oldY || newX != oldX || changRot != 0){
 		var CP = new paper.Point(oldX, oldY);
-	
 		var centerCircle = new paper.Path.Circle(CP, lineSize);
 		centerCircle.fillColor = lineColour;
 		paper.view.draw();
-	
 	}
 	// done animating this command
 	else{
 		nextCount();
-
 	}
-
-
 }
-
-
