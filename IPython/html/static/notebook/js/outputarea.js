@@ -599,6 +599,18 @@ var IPython = (function (IPython) {
 	    var pri = [];
 	    var j = 0;
 	    var r = [];
+	    
+	    //
+
+	    var newDiv = $('<div\>');
+	    newDiv.attr('target','test');
+	    var gridButton = $('<button\>');
+	    gridButton.attr('id','grid-element');
+	    gridButton.attr('value','OFF');
+	    gridButton.append("Grid On/Off");
+	    newDiv.append(gridButton);
+	    toinsert.append(newDiv);
+
 	    dataSafe = dataSafe.split("\n");
 	    for(var i = 0; i < dataSafe.length; i++){
 		if(dataSafe[i].search("TURTLE") == -1){
@@ -622,8 +634,8 @@ var IPython = (function (IPython) {
 	    // Create a canvas and append it to the output_subarea.
 	    var canvas = document.createElement('canvas');
 	    canvas.id     = "canvas1";
-	    canvas.width  = 800;
-	    canvas.height = 800;
+	    canvas.width  = 801;
+	    canvas.height = 801;
 	    canvas.resize;
 	    toinsert.append(canvas);
 	    

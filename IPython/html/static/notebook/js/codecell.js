@@ -473,9 +473,7 @@ var IPython = (function (IPython) {
         }
         this.input_prompt_number = number;
         var prompt_html = CodeCell.input_prompt_function(this.input_prompt_number, nline);
-	var teamName = "Aspidites ";
-	teamName += prompt_html;
-	this.element.find('div.input_prompt').html(teamName);
+	this.element.find('div.input_prompt').html(prompt_html);
     };
 
 
