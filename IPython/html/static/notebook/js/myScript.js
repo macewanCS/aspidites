@@ -1,11 +1,42 @@
+
 /*
 myScript.js handles turtle animation using the canvas tool and the paper.js script
 */
 
 
 var c = document.getElementById('canvas1');
+var canvasSize = 800;
 paper.setup(c);
+var grid = new paper.Path();
 
+document.getElementById('grid-element').onclick = function(){
+    
+    if(document.getElementById('grid-element').value=="OFF"){
+	document.getElementById('grid-element').value="ON";
+	//var grid = new paper.Path();
+	grid.strokeColor = 'grey';
+	var start = new paper.Point(1,1);
+	grid.moveTo(start);
+	grid.lineTo(start.add([0,canvasSize]));
+	
+	for(var i = 20; i <= canvasSize; i += 20){
+	    grid.lineTo(start.add([i,canvasSize]));
+	    grid.lineTo(start.add([i,0]));
+	    grid.lineTo(start.add([i+20,0]));
+	}
+	for(var i = 20; i <= 800; i += 20){
+	    grid.lineTo(start.add([canvasSize,i]));
+	    grid.lineTo(start.add([0,i]));
+	    grid.lineTo(start.add([0,i+20]));
+	}
+	paper.view.draw();
+    }
+    /* still need to find way to remove the grid*/
+    else{
+	document.getElementById('grid-element').value="OFF";
+	grid.clear();
+    }
+}
 /*
 getValue splits up the string with any turtle infromation, breaks it up 
 into points which have an x, y and b value. It is called 6 times for every turtle command entered (once for each new and old point value). Count is itterated for 
