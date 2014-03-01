@@ -623,8 +623,9 @@ var IPython = (function (IPython) {
 		    j = 0;
 		    pri = dataSafe[i].split(" ");
 		    r.push(pri[j+1]);
-		    r.push(pri[j+2]);	
-		    r.push(pri[j+3]); //NATHAN		   
+		    r.push(pri[j+2]);
+		    r.push(pri[j+3]);	
+		    r.push(pri[j+4]); //NATHAN		   
 		}
 	    }
 	    var turtleCoordInfo = $('<div\>').addClass('turtle-coordinates');
@@ -634,8 +635,8 @@ var IPython = (function (IPython) {
 	    // Create a canvas and append it to the output_subarea.
 	    var canvas = document.createElement('canvas');
 	    canvas.id     = "canvas1";
-	    canvas.width  = 801;
-	    canvas.height = 801;
+	    canvas.width  = 401;
+	    canvas.height = 401;
 	    canvas.resize;
 	    toinsert.append(canvas);
 	    
