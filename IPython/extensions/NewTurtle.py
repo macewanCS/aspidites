@@ -11,13 +11,24 @@ class Turtle:
         self.posY = 200
         self.bearing = 0
         self.b_change = 0
+        self.pen = 1
+
+    def pendown(self):
+        '''Put down the pen. This is the default.
+        Example: t.pendown()'''
+        self.pen = 1
+
+    def penup(self):
+        '''Lift up the pen.
+        Example: t.penup()'''
+        self.pen = 0
 
     def right(self, num):
         '''Move the Turtle x degrees to the right.
         Example: t.right(90)'''
         self.bearing -= num
         self.bearing = self.bearing%360
-        self.b_change = num;   
+        self.b_change = num   
         self.printTurtle()
 
     def left(self, num):
@@ -66,7 +77,7 @@ class Turtle:
         self.printTurtle()
 
     def printTurtle(self):
-        print "TURTLE" + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change);
+        print "TURTLE" + " " + str(self.pen) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change);
 
     def home(self):
         '''Move the Turtle to its home position.
