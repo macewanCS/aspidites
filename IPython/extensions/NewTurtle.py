@@ -12,6 +12,7 @@ class Turtle:
         self.bearing = 0
         self.b_change = 0
         self.pen = 1
+        self.color = "black"
 
     def pendown(self):
         '''Put down the pen. This is the default.
@@ -76,8 +77,13 @@ class Turtle:
 	self.b_change = 0
         self.printTurtle()
 
+    def pencolor(self, color):
+        '''Change the color of the pen. Default is black.
+        Example: t.pencolor("red")'''
+        self.color = color
+
     def printTurtle(self):
-        print "TURTLE" + " " + str(self.pen) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change);
+        print "TURTLE" + " " + str(self.pen) + " " + str(self.color) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change);
 
     def home(self):
         '''Move the Turtle to its home position.

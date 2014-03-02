@@ -191,56 +191,60 @@ document.getElementById('grid-element').onclick = function(){
   command you want information about, the coord argument should specify which or the 6 possible pieces of information about each command you're looking for.
 */
 function getValue(count,coord){
-
     var d = ($(".turtle-coordinates")).text().replace(/\n/g, ",").split(",");
 
     var p;
+    var lc;
     var x;
     var y;
     var wCoord = coord;
 
-    var points = [{p:1,x:200, y:200, b:0}];
+    var points = [{p:1, lc:"black", x:200, y:200, b:0}];
     var wCount = count;
 
-    for(i = 0; i < d.length ; i+=4){
+    for(i = 0; i < d.length ; i+=5){
 	
 	p = parseInt(d[i]);
-	x = parseInt(d[i+1]);   
-	y = parseInt(d[i+2]);
-	b = parseInt(d[i+3]);
-	
-	points.push ({p:p, x:x, y:y, b:b});	
+	lc = d[i+1];
+	x = parseInt(d[i+2]);   
+	y = parseInt(d[i+3]);
+	b = parseInt(d[i+4]);	
+	points.push ({p:p, lc:lc, x:x, y:y, b:b});	
     }
     
     if(coord == 1){
 	return pen = points[wCount].p;
     }
-    
     if(coord == 2){
+	return lineColour = points[wCount].lc;
+    }   
+    else if(coord == 3){
 	return 	oldX = points[wCount].x;
     }
-    else if(coord == 3){
+    else if(coord == 4){
 	return 	oldY = points[wCount].y;
     }
-    else if(coord == 4){
+    else if(coord == 5){
 	return 	oldRotation = points[wCount].b;
     }
-    if(coord == 5){
+    if(coord == 6){
 	return pen = points[wCount+1].p;
     }
-
-    else if(coord == 6){
-	return 	newX = points[wCount+1].x;
-    }
-    else if(coord == 7){
-	return 	newY = points[wCount+1].y;
+    if(coord == 7){
+	return lineCount = points[wCount+1].lc;
     }
     else if(coord == 8){
+	return 	newX = points[wCount+1].x;
+    }
+    else if(coord == 9){
+	return 	newY = points[wCount+1].y;
+    }
+    else if(coord == 10){
 	return 	newRotation = points[wCount+1].b;
     }	
 }	
 // some variable to play with still
-var lineColour = "black";
+var lineColour;
 var lineSize = 2;
 var rotateSpeed = 1;
 var turtleColour ='#006900' ;
@@ -268,13 +272,15 @@ nextCount();
 */
 function nextCount(){
     pen = getValue(count, 1);
-    oldX = getValue(count,2);
-    oldY = getValue(count,3);
-    oldRotation = getValue(count,4);
-    pen = getValue(count, 5);
-    newX = getValue(count,6);
-    newY = getValue(count,7);
-    changRot = getValue(count,8);
+    lineColour = getValue(count, 2);
+    oldX = getValue(count,3);
+    oldY = getValue(count,4);
+    oldRotation = getValue(count,5);
+    pen = getValue(count, 6);
+    lineColour = getValue(count, 7);
+    newX = getValue(count,8);
+    newY = getValue(count,9);
+    changRot = getValue(count,10);
     count++;
     // Good test command to see what the input is from the string
     // alert("old:"+oldX +" "+ oldY + " " + oldRotation + " New:" + newX + " " +newY + " " + newRotation+ " " + changRot);
