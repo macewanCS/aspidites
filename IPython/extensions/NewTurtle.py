@@ -91,7 +91,7 @@ class Turtle:
         self.posX = 200
         self.posY = 200
         self.bearing = 0
-
+        self.b_change = 0
         self.printTurtle()
 
     
