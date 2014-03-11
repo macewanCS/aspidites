@@ -7,13 +7,10 @@ class Turtle:
     def __init__(self):
         '''Create a Turtle.
         Turtle()
-        Example: t = Turtle()''' 
-        self.posX = 200
-        self.posY = 200
-        self.bearing = 0
-        self.b_change = 0
+        Example: t = Turtle()'''       
         self.pen = 1
         self.color = "black"
+        self.home();
 
     def pendown(self):
         '''Put down the pen. This is the default.
@@ -99,6 +96,7 @@ class Turtle:
         circle(r, e)
         Example: t.circle(100, 180)'''
         temp = self.bearing
+        self.b_change = 0;
         for i in range(0, (extent/2)):
             n = math.fabs(math.radians(self.b_change) * radius)
             if(radius >= 0):
