@@ -321,7 +321,8 @@ if(turtleShow==1){
     var circle6 = new paper.Path.Circle(circlePoint, 5);
     circle6.fillColor = turtleColour;
 
-    paper.view.draw;
+	var turtle = new paper.Group([circle1,circle2,circle3,circle4,circle5,circle6,tail]);
+     paper.view.draw;
 }
 /*
   The onFrame function does all the drawing, its called every frame at roughly
@@ -361,6 +362,9 @@ paper.view.onFrame = function(event) {
 	frameY = (changY/changX);
 	frameX = 1;	
     }
+var speedCount = 0;
+while(speedCount<2){
+speedCount++;
     //rotate turtle, current is the exact centre of the turtle
     if (  changRot != 0 && turtleShow==1){
 	var current = new paper.Point(oldX, oldY);
@@ -368,25 +372,15 @@ paper.view.onFrame = function(event) {
 	if(changRot < 0){		
 	    
 	    changRot += rotateSpeed;
-	    tail.rotate(-rotateSpeed,current);
-	    circle1.rotate(-rotateSpeed,current);
-	    circle2.rotate(-rotateSpeed,current);
-	    circle3.rotate(-rotateSpeed,current);
-	    circle4.rotate(-rotateSpeed,current);
-	    circle5.rotate(-rotateSpeed,current);
-	    circle6.rotate(-rotateSpeed,current);
+	    turtle.rotate(-rotateSpeed,current);
+	   
 
 	}
 	if(changRot > 0){
 
 	    changRot -= rotateSpeed;
-	    tail.rotate(rotateSpeed,current);		
-	    circle1.rotate(rotateSpeed,current);
-	    circle2.rotate(rotateSpeed,current);
-	    circle3.rotate(rotateSpeed,current);
-	    circle4.rotate(rotateSpeed,current);
-	    circle5.rotate(rotateSpeed,current);
-	    circle6.rotate(rotateSpeed,current);	
+	    turtle.rotate(rotateSpeed,current);		
+	   
 	}
     }
     //if turtle is off we have to manually set old rotation	
@@ -396,25 +390,15 @@ paper.view.onFrame = function(event) {
     if (newX > oldX){
 	oldX += frameX;
 	if(turtleShow==1){
-	    tail.translate(frameX,0);
-	    circle1.translate(frameX,0);
-	    circle2.translate(frameX,0);
-	    circle3.translate(frameX,0);
-	    circle4.translate(frameX,0);
-	    circle5.translate(frameX,0);
-	    circle6.translate(frameX,0);
+	    turtle.translate(frameX,0);
+	   
 	}
     }
     if (newY > oldY){
 	oldY += frameY;
 	if(turtleShow==1){
-	    tail.translate(0,frameY);
-	    circle1.translate(0,frameY);
-	    circle2.translate(0,frameY);
-	    circle3.translate(0,frameY);
-	    circle4.translate(0,frameY);
-	    circle5.translate(0,frameY);
-	    circle6.translate(0,frameY);
+	    turtle.translate(0,frameY);
+	  
 	}
 	
     }
@@ -422,13 +406,8 @@ paper.view.onFrame = function(event) {
     if (newX < oldX){
 	oldX -= frameX;
 	if(turtleShow==1){
-	    tail.translate(-frameX,0);
-	    circle1.translate(-frameX,0);
-	    circle2.translate(-frameX,0);
-	    circle3.translate(-frameX,0);
-	    circle4.translate(-frameX,0);
-	    circle5.translate(-frameX,0);
-	    circle6.translate(-frameX,0);
+	    turtle.translate(-frameX,0);
+	   
 	}
 	
     }
@@ -436,16 +415,12 @@ paper.view.onFrame = function(event) {
     if (newY < oldY){
 	oldY -=frameY;
 	if(turtleShow==1){
-	    tail.translate(0,-frameY);
-	    circle1.translate(0,-frameY);
-	    circle2.translate(0,-frameY);
-	    circle3.translate(0,-frameY);
-	    circle4.translate(0,-frameY);
-	    circle5.translate(0,-frameY);
-	    circle6.translate(0,-frameY);
+	    turtle.translate(0,-frameY);
+
 	}
 	
     }
+
     // prints the little circles every frame until we reach the correct point
     // to create the line
     if (newY != oldY || newX != oldX || changRot != 0){
@@ -461,4 +436,7 @@ paper.view.onFrame = function(event) {
     else{
 	nextCount();
     }
+		
+	}
+
 }
