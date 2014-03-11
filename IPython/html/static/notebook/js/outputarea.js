@@ -599,18 +599,6 @@ var IPython = (function (IPython) {
 	    var pri = [];
 	    var j = 0;
 	    var r = [];
-	    
-	    //
-
-	    var newDiv = $('<div\>');
-	    newDiv.attr('target','test');
-	    var gridButton = $('<button\>');
-	    gridButton.attr('id','grid-element');
-	    gridButton.attr('value','OFF');
-	    gridButton.append("Grid On/Off");
-	    newDiv.append(gridButton);
-	    toinsert.append(newDiv);
-
 	    dataSafe = dataSafe.split("\n");
 	    for(var i = 0; i < dataSafe.length; i++){
 		if(dataSafe[i].search("TURTLE") == -1){
@@ -629,10 +617,25 @@ var IPython = (function (IPython) {
 		    r.push(pri[j+5]);		   
 		}
 	    }
+	    var lineCount = getLineCount(newData);
+	    data = newData;
+	    data += "Line Count " + lineCount;
+            toinsert.append($("<pre/>").html(data));
+	    
 	    var turtleCoordInfo = $('<div\>').addClass('turtle-coordinates');
 	    turtleCoordInfo.append(r.join()).hide();
 	    toinsert.append(turtleCoordInfo);
-
+	    
+	    /* create grid button */
+	    var newDiv = $('<div\>');
+	    newDiv.attr('target','test');
+	    var gridButton = $('<button\>');
+	    gridButton.attr('id','grid-element');
+	    gridButton.attr('value','OFF');
+	    gridButton.append("Grid On/Off");
+	    newDiv.append(gridButton);
+	    toinsert.append(newDiv);
+	    
 	    // Create a canvas and append it to the output_subarea.
 	    var canvas = document.createElement('canvas');
 	    canvas.id     = "canvas1";
@@ -646,18 +649,13 @@ var IPython = (function (IPython) {
 	    s.type = "text/javascript";
 	    s.src = "/static/notebook/js/paper.js";
 	    toinsert.append(s);
-
+	    
 	    // add the javascript contained in myScript.js
 	    var q = document.createElement("script");
 	    q.type = "text/javascript";
 	    q.src = "/static/notebook/js/myScript.js";
 	    q.data
 	    toinsert.append(q);
-	    
-	    var lineCount = getLineCount(newData);
-	    data = newData;
-	    data += "Line Count " + lineCount;
-            toinsert.append($("<pre/>").html(data));
             element.append(toinsert);
 	}
 	else {
@@ -667,8 +665,8 @@ var IPython = (function (IPython) {
             element.append(toinsert);
 	}
     };
-
-
+    
+    
     function getLineCount(data) {
 	var dataLen = data.length;
 	var i = 0;
@@ -681,7 +679,7 @@ var IPython = (function (IPython) {
 	}
 	return j;
     };
-
+    
     
     OutputArea.prototype.append_svg = function (svg, md, element) {
         var type = 'image/svg+xml';
