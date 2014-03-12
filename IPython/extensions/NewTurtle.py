@@ -9,6 +9,7 @@ class Turtle:
         Turtle()
         Example: t = Turtle()'''       
         self.pen = 1
+        self.speedVar = 1
         self.color = "black"
         self.home();
 
@@ -23,6 +24,13 @@ class Turtle:
         penup()
         Example: t.penup()'''
         self.pen = 0
+
+    def speed(self, num):
+        '''Change the speed of the turtle
+        speed(num)
+        Example: t.speed(num)'''
+        self.speedVar = num
+		
 
     def right(self, num):
         '''Move the Turtle num degrees to the right.
@@ -88,13 +96,9 @@ class Turtle:
         self.color = color
 
     def printTurtle(self):
-        print "TURTLE" + " " + str(self.pen) + " " + str(self.color) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change);
-
+        print "TURTLE" + " " + str(self.pen) + " " + str(self.color) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change) + " " + str(self.speedVar)
+      
     def circle(self, radius, extent=360):
-        '''Draw extent e of a circle or curve with radius r. If no extent is provided the default is 360.
-        The circle is drawn counterclockwise if radius is positive and clockwise if negative.
-        circle(r, e)
-        Example: t.circle(100, 180)'''
         temp = self.bearing
         self.b_change = 0;
         for i in range(0, (extent/2)):
@@ -119,6 +123,7 @@ class Turtle:
         self.bearing = 0
         self.b_change = 0
         self.printTurtle()
+		
 
     
     
