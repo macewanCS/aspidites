@@ -614,7 +614,8 @@ var IPython = (function (IPython) {
 		    r.push(pri[j+2]);
 		    r.push(pri[j+3]);	
 		    r.push(pri[j+4]);
-		    r.push(pri[j+5]);		   
+		    r.push(pri[j+5]);	
+		    r.push(pri[j+6]);	   
 		}
 	    }
 	    var lineCount = getLineCount(newData);
