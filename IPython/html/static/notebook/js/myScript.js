@@ -310,7 +310,8 @@ function nextCount(){
 	if(newPen!=oldPen || newColour != oldColour){
 		path = new paper.Path();
 		path.strokeWidth = 3;
-
+	
+   	path.add(new paper.Point(oldX, oldY));
 	}
 
     // Good test command to see what the input is from the string
@@ -370,6 +371,9 @@ if(turtleShow==1){
 
 
 paper.view.onFrame = function(event) { 
+
+ 
+
 
     var changX =Math.abs(oldX-newX);
     var changY =Math.abs(oldY-newY);
@@ -458,12 +462,11 @@ speedCount++;
 	
     }
 	
-	
-    // prints the little circles every frame until we reach the correct point
+	 // prints the little circles every frame until we reach the correct point
     // to create the line
     if (newY != oldY || newX != oldX || changRot != 0){
 	
-	if(newPen == 1 && changRot == 0){  
+	if(newPen == 1 ){  
 	 
         path.add(new paper.Point(oldX, oldY));
 	path.strokeColor = newColour;
@@ -472,35 +475,13 @@ speedCount++;
     }
     // done animating this command
     else{
-	
+	path.add(new paper.Point(newX, newY));
 	nextCount();
     }
-		
+	
+  	
 	}
 
 }
 
-
-
-	/*
-
-		Old draw stuff		
-
-		var CP = new paper.Point(oldX, oldY);
-	    	var centerCircle = new paper.Path.Circle(CP, lineSize+1);
-	    	centerCircle.fillColor = lineColour;
-
-		var CP = new paper.Point(newX, newY);
-	   	var centerCircle = new paper.Path.Circle(CP, lineSize+1);
-	    	centerCircle.fillColor = lineColour;
-
-		var path = new paper.Path.Line({
-		from: [veryOldX,veryOldY ],
-		to: [newX,newY ],
-		
-		
-		});
-		path.strokeColor = lineColour;
-		path.strokeWidth = 3;
-		*/
 
