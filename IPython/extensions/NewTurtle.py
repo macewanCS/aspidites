@@ -25,12 +25,15 @@ class Turtle:
         Example: t.penup()'''
         self.pen = 0
 
-    def speed(self, num):
+    def speed(self, speed):
         '''Change the speed of the turtle
-        speed(num)
-        Example: t.speed(num)'''
-        self.speedVar = num
-		
+        speed(speed)
+        Example: t.speed(speed)'''
+        if speed == "fast":
+            self.speedVar = 2
+        elif speed == "slow":
+            self.speedVar = 1
+            
 
     def right(self, num):
         '''Move the Turtle num degrees to the right.
