@@ -209,10 +209,10 @@ function getValue(count,coord){
     }
     
     if(coord == 1){
-	return pen = points[wCount].p;
+	return oldPen = points[wCount].p;
     }
     else if(coord == 2){
-	return lineColour = points[wCount].lc;
+	return oldColour = points[wCount].lc;
     }   
     else if(coord == 3){
 	return 	oldX = points[wCount].x;
@@ -227,10 +227,10 @@ function getValue(count,coord){
 	return 	turtleSpeed = points[wCount].s;
     }
     else if(coord == 7){
-	return pen = points[wCount+1].p;
+	return newPen = points[wCount+1].p;
     }
     else if(coord == 8){
-	return lineCount = points[wCount+1].lc;
+	return newColour = points[wCount+1].lc;
     }
     else if(coord == 9){
 	return 	newX = points[wCount+1].x;
@@ -246,7 +246,7 @@ function getValue(count,coord){
     }		
 }	
 // some variable to play with still
-var lineColour;
+
 var lineSize = 2;
 var rotateSpeed = 1;
 var turtleColour ='#006900' ;
@@ -254,13 +254,16 @@ var turtleShow = 1;
 
 
 // onFrame variables
-var pen;
+var oldPen;
 var oldX;
 var oldY;
 var oldRotation;
+var oldColour;
+var newPen;
 var newX; 
 var newY;
 var newRotation;
+var newColour;
 var veryOldX;
 var veryOldY;
 var turtleSpeed;
@@ -268,6 +271,7 @@ var turtleSpeed;
 // counts each turtle command
 var count = 0;
 var changRot;
+
 
 // initial function call
 nextCount();
@@ -277,14 +281,14 @@ nextCount();
    global variables to each of the values pulled from the intial string.
 */
 function nextCount(){
-    pen = getValue(count, 1);
-    lineColour = getValue(count, 2);
+    oldPen = getValue(count, 1);
+    oldColour = getValue(count, 2);
     oldX = getValue(count,3);
     oldY = getValue(count,4);
     oldRotation = getValue(count,5);
 	turtleSpeed =  getValue(count,6);
-    pen = getValue(count, 7);
-    lineColour = getValue(count, 8);
+    newPen = getValue(count, 7);
+    newColour = getValue(count, 8);
     newX = getValue(count,9);
     newY = getValue(count,10);
     changRot = getValue(count,11);
@@ -292,10 +296,24 @@ function nextCount(){
     count++;
 	veryOldX =oldX;
 	veryOldY =oldY;
- 	lineGroup = new paper.Group();
+//path.add(new paper.Point(veryOldX, veryOldY));
+
+	if(newPen!=oldPen || newColour != oldColour){
+		path = new paper.Path();
+		path.strokeWidth = 3;
+	
+   	path.add(new paper.Point(oldX, oldY));
+	}
+
     // Good test command to see what the input is from the string
-     //alert("old:"+oldX +" "+ oldY + " " + oldRotation + " New:" + newX + " " +newY + " " + newRotation+ " " + turtleSpeed);
+    // alert("old:"+oldX +" "+ oldY + " " + oldRotation + " New:" + newX + " " +newY + " " + newRotation+ " " + turtleSpeed);
+
 }
+var path;
+path = new paper.Path();
+path.strokeWidth = 3;
+
+path.add(new paper.Point(veryOldX, veryOldY));
 //builds the initial turtle icon
 if(turtleShow==1){
     var tail = new paper.Path.RegularPolygon(new paper.Point(oldX-11,oldY), 3, 3);
@@ -341,10 +359,12 @@ if(turtleShow==1){
 */
 
 
-var lineGroup = new paper.Group();
 
 
 paper.view.onFrame = function(event) { 
+
+ 
+
 
     var changX =Math.abs(oldX-newX);
     var changY =Math.abs(oldY-newY);
@@ -375,7 +395,7 @@ paper.view.onFrame = function(event) {
 	frameX = 1;	
     }
 var speedCount = 0;
-while(speedCount<=turtleSpeed){
+while(speedCount<turtleSpeed){
 speedCount++;
     //rotate turtle, current is the exact centre of the turtle
     if (  changRot != 0 && turtleShow==1){
@@ -432,33 +452,24 @@ speedCount++;
 	}
 	
     }
-
-    // prints the little circles every frame until we reach the correct point
+	
+	 // prints the little circles every frame until we reach the correct point
     // to create the line
     if (newY != oldY || newX != oldX || changRot != 0){
 	
-	if(pen == 1 && changRot == 0){
-	    var CP = new paper.Point(oldX, oldY);
-	    var centerCircle = new paper.Path.Circle(CP, lineSize);
-	    centerCircle.fillColor = lineColour;
-	    paper.view.draw();
-            lineGroup.addChild(centerCircle);
+	if(newPen == 1 ){  
+	 
+        path.add(new paper.Point(oldX, oldY));
+	path.strokeColor = newColour;
+
 	}
     }
     // done animating this command
     else{
-	if(pen == 1){
-		var path = new paper.Path.Line({
-		from: [veryOldX,veryOldY ],
-		to: [newX,newY ],
-		
-		
-		});
-		path.strokeColor = lineColour;
-		path.strokeWidth = 4;
-		lineGroup.remove();
-	}
+	path.add(new paper.Point(newX, newY));
 	nextCount();
     }		
 }
 }
+
+
