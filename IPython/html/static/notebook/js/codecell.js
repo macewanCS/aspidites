@@ -133,7 +133,6 @@ var IPython = (function (IPython) {
         $(this.code_mirror.getInputField()).attr("spellcheck", "false");
         inner_cell.append(input_area);
         input.append(prompt).append(inner_cell);
-
         var widget_area = $('<div/>')
             .addClass('widget-area')
             .hide();
@@ -519,10 +518,9 @@ var IPython = (function (IPython) {
 
 
     // JSON serialization
-
     CodeCell.prototype.fromJSON = function (data) {
-        IPython.Cell.prototype.fromJSON.apply(this, arguments);
-        if (data.cell_type === 'code') {
+	IPython.Cell.prototype.fromJSON.apply(this, arguments);
+	if (data.cell_type === 'code') {
             if (data.input !== undefined) {
                 this.set_text(data.input);
                 // make this value the starting point, so that we can only undo
@@ -547,10 +545,9 @@ var IPython = (function (IPython) {
         }
     };
 
-
     CodeCell.prototype.toJSON = function () {
         var data = IPython.Cell.prototype.toJSON.apply(this);
-        data.input = this.get_text();
+	data.input = this.get_text();
         // is finite protect against undefined and '*' value
         if (isFinite(this.input_prompt_number)) {
             data.prompt_number = this.input_prompt_number;

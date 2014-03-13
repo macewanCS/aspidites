@@ -3,12 +3,11 @@
 */
 
 
-var c = document.getElementById('canvas1');
+var c = this.document.getElementById('canvas1');
 var canvasSize = 401;
 document.getElementById("canvas1").style.background =' 	#99CCFF';
 paper.setup(c);
 var grid = new paper.Path();
-
 
 
 
@@ -145,16 +144,8 @@ var grid = new paper.Path();
   }
 
   setInterval(run, delay);
-
 */
-
-
-
-
-
-
-
-
+	    
 /* adds grid for user to turn off / on, helps see what the turtle
    is doing */
 document.getElementById('grid-element').onclick = function(){
@@ -360,7 +351,7 @@ paper.view.onFrame = function(event) {
 
 
     //This is for ripple effect...
-    // disturb(oldX, oldY);
+   // disturb(oldX, oldY);
 
 
     // the frame variables outline how much in which direction, this allows
@@ -468,8 +459,6 @@ speedCount++;
 		lineGroup.remove();
 	}
 	nextCount();
-    }
-		
-	}
-
+    }		
+}
 }

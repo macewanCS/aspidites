@@ -233,11 +233,12 @@ var IPython = (function (IPython) {
 
 
     OutputArea.prototype.handle_output = function (msg) {
-        var json = {};
+	var json = {};
         var msg_type = json.output_type = msg.header.msg_type;
         var content = msg.content;
         if (msg_type === "stream") {
             json.text = content.data;
+	    alert(json.text);
             json.stream = content.name;
         } else if (msg_type === "display_data") {
             json = content.data;
@@ -580,7 +581,7 @@ var IPython = (function (IPython) {
         }
     };
 
-
+    
     OutputArea.prototype.append_text = function (data, md, element, extra_class) {
         var type = 'text/plain';
 	var lineCount = getLineCount(data);
@@ -589,6 +590,17 @@ var IPython = (function (IPython) {
         data = utils.fixConsole(data);
         data = utils.fixCarriageReturn(data);
         data = utils.autoLinkUrls(data);
+//
+	/*document.getElementById('turtle_b').onclick = function (){
+	    //document.getElementById('turtle_b').value = "ON";
+	    var response = confirm("         If you click yes, your current notebook will be minorly altered for Turtle Functionality and the page will refresh. Please save your work before you click ok.");
+	    if (response == true){
+		//location.reload();
+		document.getElementById('turtle_b').value = "ON";
+		//location.reload();
+	    }
+	}*/
+//
         if (extra_class){
             toinsert.addClass(extra_class);
         }
@@ -627,16 +639,28 @@ var IPython = (function (IPython) {
 	    turtleCoordInfo.append(r.join()).hide();
 	    toinsert.append(turtleCoordInfo);
 	    
-	    /* create grid button */
-	    var newDiv = $('<div\>');
-	    newDiv.attr('target','test');
+	    var buttonDiv = $('<div\>');
+	    buttonDiv.attr('target','button-area');
+
+	    // create help button 
+	    var helpButton = $('<button\>');
+	    helpButton.attr('id','help-element');
+	    helpButton.append("Help!");
+	    buttonDiv.append(helpButton);
+	    
+	    // create grid button  
 	    var gridButton = $('<button\>');
 	    gridButton.attr('id','grid-element');
 	    gridButton.attr('value','OFF');
 	    gridButton.append("Grid On/Off");
-	    newDiv.append(gridButton);
-	    toinsert.append(newDiv);
-	    
+	    buttonDiv.append(gridButton);
+	    toinsert.append(buttonDiv);
+
+	    var bMenu = $('.container.border-box-sizing.toolbar');
+	    var turtleButton = $('<button/>');
+	    turtleButton.append("IP[y]: Turtle");
+	    bMenu.append(turtleButton);
+
 	    // Create a canvas and append it to the output_subarea.
 	    var canvas = document.createElement('canvas');
 	    canvas.id     = "canvas1";
