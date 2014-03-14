@@ -88,8 +88,17 @@ var IPython = (function (IPython) {
     ToolBar.prototype.style = function () {
         this.element.addClass('border-box-sizing')
             .addClass('toolbar');
+	var bMenu = $('.container.border-box-sizing.toolbar');
+	var turtleButton = document.createElement("input");
+	turtleButton.src = "/static/notebook/js/turtle-ui/turtle.png";
+	turtleButton.type = "image";
+	turtleButton.id = "turtle-icon-button";
+	bMenu.append(turtleButton);
+	document.getElementById('turtle-icon-button').onclick = function(){
+	    alert("To use Turtle functionality enter the follow and run:\nfrom NewTurtle import Turtle\nt = Turtle()");
+	}
     };
-
+    
     /**
      * Show and hide toolbar
      * @method toggle
