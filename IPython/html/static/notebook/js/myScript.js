@@ -148,9 +148,6 @@ var grid = new paper.Path();
 	    
 /* adds grid for user to turn off / on, helps see what the turtle
    is doing */
-//document.getElementById('turtle-icon-button').onclick = function(){
-//    alert("test");
-//}
 document.getElementById('grid-element').onclick = function(){
     
     if(document.getElementById('grid-element').value=="OFF"){
@@ -180,7 +177,7 @@ document.getElementById('grid-element').onclick = function(){
 }
 
 document.getElementById('help-element').onclick = function (){
-    alert("example:\nfrom NewTurtle import Turtle\nt = Turtle()\nt.forward(50)\nfor help: help(Turtle)");
+    alert("example:\nfrom NewTurtle import Turtle\nt = Turtle()\nt.forward(50)\nfor help:\nhelp(Turtle)");
 }
 /*
   getValue splits up the string with any turtle infromation, breaks it up 
