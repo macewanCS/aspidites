@@ -238,7 +238,6 @@ var IPython = (function (IPython) {
         var content = msg.content;
         if (msg_type === "stream") {
             json.text = content.data;
-	    alert(json.text);
             json.stream = content.name;
         } else if (msg_type === "display_data") {
             json = content.data;
@@ -590,17 +589,6 @@ var IPython = (function (IPython) {
         data = utils.fixConsole(data);
         data = utils.fixCarriageReturn(data);
         data = utils.autoLinkUrls(data);
-//
-	/*document.getElementById('turtle_b').onclick = function (){
-	    //document.getElementById('turtle_b').value = "ON";
-	    var response = confirm("         If you click yes, your current notebook will be minorly altered for Turtle Functionality and the page will refresh. Please save your work before you click ok.");
-	    if (response == true){
-		//location.reload();
-		document.getElementById('turtle_b').value = "ON";
-		//location.reload();
-	    }
-	}*/
-//
         if (extra_class){
             toinsert.addClass(extra_class);
         }
@@ -655,11 +643,6 @@ var IPython = (function (IPython) {
 	    gridButton.append("Grid On/Off");
 	    buttonDiv.append(gridButton);
 	    toinsert.append(buttonDiv);
-
-	    var bMenu = $('.container.border-box-sizing.toolbar');
-	    var turtleButton = $('<button/>');
-	    turtleButton.append("IP[y]: Turtle");
-	    bMenu.append(turtleButton);
 
 	    // Create a canvas and append it to the output_subarea.
 	    var canvas = document.createElement('canvas');
