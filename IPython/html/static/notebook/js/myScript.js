@@ -187,7 +187,6 @@ document.getElementById('help-element').onclick = function (){
 */
 function getValue(count,coord){
     var d = ($(".turtle-coordinates")).text().replace(/\n/g, ",").split(",");
-
     var p;
     var lc;
     var x;
