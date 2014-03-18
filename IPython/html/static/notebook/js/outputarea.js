@@ -233,7 +233,7 @@ var IPython = (function (IPython) {
 
 
     OutputArea.prototype.handle_output = function (msg) {
-        var json = {};
+	var json = {};
         var msg_type = json.output_type = msg.header.msg_type;
         var content = msg.content;
         if (msg_type === "stream") {
@@ -580,7 +580,7 @@ var IPython = (function (IPython) {
         }
     };
 
-
+    
     OutputArea.prototype.append_text = function (data, md, element, extra_class) {
         var type = 'text/plain';
 	var lineCount = getLineCount(data);
@@ -627,16 +627,23 @@ var IPython = (function (IPython) {
 	    turtleCoordInfo.append(r.join()).hide();
 	    toinsert.append(turtleCoordInfo);
 	    
-	    /* create grid button */
-	    var newDiv = $('<div\>');
-	    newDiv.attr('target','test');
+	    var buttonDiv = $('<div\>');
+	    buttonDiv.attr('target','button-area');
+
+	    // create help button 
+	    var helpButton = $('<button\>');
+	    helpButton.attr('id','help-element');
+	    helpButton.append("Help!");
+	    buttonDiv.append(helpButton);
+	    
+	    // create grid button  
 	    var gridButton = $('<button\>');
 	    gridButton.attr('id','grid-element');
 	    gridButton.attr('value','OFF');
 	    gridButton.append("Grid On/Off");
-	    newDiv.append(gridButton);
-	    toinsert.append(newDiv);
-	    
+	    buttonDiv.append(gridButton);
+	    toinsert.append(buttonDiv);
+
 	    // Create a canvas and append it to the output_subarea.
 	    var canvas = document.createElement('canvas');
 	    canvas.id     = "canvas1";
