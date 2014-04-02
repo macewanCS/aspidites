@@ -1,17 +1,39 @@
-
+import easygui as eg
 import math
-class Turtle:
+import json
+import atexit
 
+
+
+
+#from IPython.core.displaypub import DisplayPublisher
+from IPython.core.displaypub import publish_display_data
+#from IPython.kernal.zmq.datapub import publish_data
+from IPython.kernel.zmq.datapub import publish_data
+from IPython.core.interactiveshell import InteractiveShell
+
+class Turtle:
     SIZE = 400
     OFFSET = 20;
+    TURTLE_BUFF = "";
+    REGISTERED = 0
     def __init__(self):
         '''Create a Turtle.
         Turtle()
-        Example: t = Turtle()'''       
+        Example: t = Turtle()'''    
         self.pen = 1
         self.speedVar = 1
         self.color = "black"
-        self.home();
+        self.home()
+        if(not Turtle.REGISTERED):
+            get_ipython().register_post_execute(self.postExecuteTurtle)
+
+    def postExecuteTurtle(self):
+        publish_display_data("IPython.extensions.NewTurtle",{'application/turtle' : Turtle.TURTLE_BUFF})
+        Turtle.TURTLE_BUFF = ""
+        #eg.msgbox("Turtle")
+        Turtle.REGISTERED = 1
+        
 
     def pendown(self):
         '''Put down the pen. This is the default.
@@ -57,6 +79,8 @@ class Turtle:
         '''Move the Turtle forward by num units.
         forward(num)
         Example: t.forward(100)'''
+        '[1, "simple", "list"]'
+
         self.posX += num * math.cos(math.radians(self.bearing))
         self.posY -= num * math.sin(math.radians(self.bearing))
 
@@ -99,7 +123,20 @@ class Turtle:
         self.color = color
 
     def printTurtle(self):
-        print "TURTLE" + " " + str(self.pen) + " " + str(self.color) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change) + " " + str(self.speedVar)
+        #print "TURTLE" + " " + str(self.pen) + " " + str(self.color) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change) + " " + str(self.speedVar)
+        #f = DisplayPublisher();
+        #f.publish("IPython.extensions.NewTurtle",{'text' : 'text/plain'});
+
+        Turtle.TURTLE_BUFF += str(self.pen) + "," + str(self.color) + "," + str(self.posX) + "," + str(self.posY) + "," + str(self.b_change) + "," + str(self.speedVar) + ",";
+
+      
+       # publish_display_data("IPython.extensions.NewTurtle",{'application/turtle' : jencode})
+#        eg.msgbox(jencode)
+        #publish_display_data("IPython.extensions.NewTurtle",{'application/turtle' : str(self.pen) + " " + str(self.color) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change) + " " + str(self.speedVar) });
+  
+
+
+
       
     def circle(self, radius, extent=360):
         temp = self.bearing
@@ -126,9 +163,11 @@ class Turtle:
         self.bearing = 0
         self.b_change = 0
         self.printTurtle()
-		
+
+       
 
     
-    
+
+
 
 
