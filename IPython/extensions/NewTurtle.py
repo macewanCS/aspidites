@@ -1,4 +1,4 @@
-import easygui as eg
+#import easygui as eg
 import math
 import json
 import atexit
