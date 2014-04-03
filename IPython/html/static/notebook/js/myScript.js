@@ -10,8 +10,6 @@ document.getElementById("canvas1").style.background =' 	#99CCFF';
 paper.setup(c);
 var grid = new paper.Path();
 
-
-
 function setData(data){
     d = data.split(",");
     nextCount();
@@ -58,8 +56,7 @@ document.getElementById('help-element').onclick = function (){
   command you want information about, the coord argument should specify which or the 6 possible pieces of information about each command you're looking for.
 */
 function getValue(count,coord){
-    //var d = ($(".turtle-coordinates")).text().replace(/\n/g, ",").split(",");
-    //var d = turtleData;
+
     var p;
     var lc;
     var x;
@@ -67,17 +64,15 @@ function getValue(count,coord){
     var s;
 
     var wCoord = coord;
-
     var points = [{p:1, lc:"black", x:200, y:200, b:0, s:1}];
     var wCount = count;
     
     for(i = 0; i < d.length ; i+=6){
-	
 	p = parseInt(d[i]);
 	
 	lc = d[i+1];
-	x = parseInt(d[i+2]);   
-	y = parseInt(d[i+3]);
+	x = parseFloat(d[i+2]);   
+	y = parseFloat(d[i+3]);
 	b = parseInt(d[i+4]);	
 	s = parseInt(d[i+5]);
 	
@@ -235,23 +230,16 @@ if(turtleShow==1){
   30-60fps
 */
 
-
-
-
 paper.view.onFrame = function(event) { 
 
     var changX =Math.abs(oldX-newX);
     var changY =Math.abs(oldY-newY);
 
-
-    //This is for ripple effect...
-    // disturb(oldX, oldY);
-
-
     // the frame variables outline how much in which direction, this allows
     // the turtle to take the shortest route
     var frameX;
     var frameY;
+
     // can't devide by 0, no need for frame calculation anyway if there's 
     // no change in one direction
     if ((changY ==0 || changX ==0)){
@@ -268,7 +256,17 @@ paper.view.onFrame = function(event) {
 	frameY = (changY/changX);
 	frameX = 1;	
     }
-   
+   	if( changX>changY && Math.abs(oldX-newX)<turtleSpeed ){
+		turtleSpeed=Math.abs(oldX-newX);
+		
+	}
+	if( changY>changX && Math.abs(oldY-newY)<turtleSpeed ){
+		turtleSpeed=Math.abs(oldY-newY);
+		
+	}
+	if  (changRot>0 && Math.abs(changRot)<turtleSpeed){
+		turtleSpeed=Math.abs(changRot);
+	}
 	//frameX *= turtleSpeed;
 	//frameY *= turtleSpeed;
 
@@ -291,9 +289,7 @@ paper.view.onFrame = function(event) {
 	    }
 	}
 
-	if  (changRot>0 && Math.abs(changRot)<turtleSpeed){
-		turtleSpeed=Math.abs(changRot);
-	}
+
 	//if turtle is off we have to manually set old rotation	
 	else{
 	    oldRotation = newRotation;
@@ -332,22 +328,6 @@ paper.view.onFrame = function(event) {
 	    
 	}
 	
-	
-//alert(Math.abs(oldX-newX));
-	if( changX>changY && Math.abs(oldX-newX)<turtleSpeed ){
-		turtleSpeed=Math.abs(oldX-newX);
-		
-	}
-	if( changY>changX && Math.abs(oldY-newY)<turtleSpeed ){
-		turtleSpeed=Math.abs(oldY-newY);
-		
-	}
-
-       // if( Math.abs(oldY-newY)<turtleSpeed ){
-	//	turtleSpeed=(Math.abs(oldY-newY)-1);
-		
-	//}
-
 	// prints the little circles every frame until we reach the correct point
 	// to create the line
 	if (newY != oldY || newX != oldX || changRot != 0){
@@ -364,7 +344,4 @@ paper.view.onFrame = function(event) {
 	    path.add(new paper.Point(newX, newY));
 	    nextCount();
 	}		
-	
-    
-
 }
