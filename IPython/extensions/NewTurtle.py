@@ -51,11 +51,11 @@ class Turtle:
         '''Change the speed of the turtle
         speed(speed)
         Example: t.speed(speed)'''
-        if speed == "fast":
-            self.speedVar = 2
-        elif speed == "slow":
-            self.speedVar = 1
-            
+#        if speed == "fast":
+#            self.speedVar = 2
+#        elif speed == "slow":
+#            self.speedVar = 1
+        self.speedVar=speed
 
     def right(self, num):
         '''Move the Turtle num degrees to the right.
