@@ -183,7 +183,7 @@ function nextCount(){
     }
 
     // Good test command to see what the input is from the string
-    //alert("old:"+oldX +" "+ oldY + " " + oldRotation + " New:" + newX + " " +newY + " " + newRotation+ " " + turtleSpeed);
+   //alert("old:"+oldX +" "+ oldY + " " + oldRotation + " New:" + newX + " " +newY + " " + changRot+ " " +turtleSpeed );
 
 }
 var path;
@@ -268,65 +268,86 @@ paper.view.onFrame = function(event) {
 	frameY = (changY/changX);
 	frameX = 1;	
     }
-    var speedCount = 0;
-    while(speedCount<turtleSpeed){
-	speedCount++;
+   
+	//frameX *= turtleSpeed;
+	//frameY *= turtleSpeed;
+
 	//rotate turtle, current is the exact centre of the turtle
 	if (  changRot != 0 && turtleShow==1){
 	    var current = new paper.Point(oldX, oldY);
 	    
 	    if(changRot < 0){		
 		
-		changRot += rotateSpeed;
-		turtle.rotate(-rotateSpeed,current);
+		changRot += rotateSpeed*turtleSpeed;
+		turtle.rotate(-rotateSpeed*turtleSpeed,current);
 		
 
 	    }
 	    if(changRot > 0){
 
-		changRot -= rotateSpeed;
-		turtle.rotate(rotateSpeed,current);		
+		changRot -= rotateSpeed*turtleSpeed;
+		turtle.rotate(rotateSpeed*turtleSpeed,current);		
 		
 	    }
+	}
+
+	if  (changRot>0 && Math.abs(changRot)<turtleSpeed){
+		turtleSpeed=Math.abs(changRot);
 	}
 	//if turtle is off we have to manually set old rotation	
 	else{
 	    oldRotation = newRotation;
 	}
 	if (newX > oldX){
-	    oldX += frameX;
+	    oldX += (frameX*turtleSpeed);
 	    if(turtleShow==1){
-		turtle.translate(frameX,0);
+		turtle.translate((frameX*turtleSpeed),0);
 		
 	    }
 	}
 	if (newY > oldY){
-	    oldY += frameY;
+	    oldY += (frameY*turtleSpeed);
 	    if(turtleShow==1){
-		turtle.translate(0,frameY);
+		turtle.translate(0,(frameY*turtleSpeed));
 		
 	    }
 	    
 	}
 
 	if (newX < oldX){
-	    oldX -= frameX;
+	    oldX -= (frameX*turtleSpeed);
 	    if(turtleShow==1){
-		turtle.translate(-frameX,0);
+		turtle.translate((-frameX*turtleSpeed),0);
 		
 	    }
 	    
 	}
 
 	if (newY < oldY){
-	    oldY -=frameY;
+	    oldY -= (frameY*turtleSpeed);
 	    if(turtleShow==1){
-		turtle.translate(0,-frameY);
+		turtle.translate(0,(-frameY*turtleSpeed));
 
 	    }
 	    
 	}
 	
+	
+//alert(Math.abs(oldX-newX));
+	if( changX>changY && Math.abs(oldX-newX)<turtleSpeed ){
+		turtleSpeed=Math.abs(oldX-newX);
+		
+	}
+	if( changY>changX && Math.abs(oldY-newY)<turtleSpeed ){
+		turtleSpeed=Math.abs(oldY-newY);
+		
+	}
+
+       // if( Math.abs(oldY-newY)<turtleSpeed ){
+	//	turtleSpeed=(Math.abs(oldY-newY)-1);
+		
+	//}
+
 	// prints the little circles every frame until we reach the correct point
 	// to create the line
 	if (newY != oldY || newX != oldX || changRot != 0){
@@ -344,6 +365,6 @@ paper.view.onFrame = function(event) {
 	    nextCount();
 	}		
 	
-    }
+    
 
 }
