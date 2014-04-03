@@ -3,12 +3,7 @@ import math
 import json
 import atexit
 
-
-
-
-#from IPython.core.displaypub import DisplayPublisher
 from IPython.core.displaypub import publish_display_data
-#from IPython.kernal.zmq.datapub import publish_data
 from IPython.kernel.zmq.datapub import publish_data
 from IPython.core.interactiveshell import InteractiveShell
 
@@ -31,7 +26,6 @@ class Turtle:
     def postExecuteTurtle(self):
         publish_display_data("IPython.extensions.NewTurtle",{'application/turtle' : Turtle.TURTLE_BUFF})
         Turtle.TURTLE_BUFF = ""
-        #eg.msgbox("Turtle")
         Turtle.REGISTERED = 1
         
 
@@ -51,11 +45,7 @@ class Turtle:
         '''Change the speed of the turtle
         speed(speed)
         Example: t.speed(speed)'''
-#        if speed == "fast":
-#            self.speedVar = 2
-#        elif speed == "slow":
-#            self.speedVar = 1
-        self.speedVar=speed
+        self.speedVar=speed%11
 
     def right(self, num):
         '''Move the Turtle num degrees to the right.
@@ -81,8 +71,9 @@ class Turtle:
         Example: t.forward(100)'''
         '[1, "simple", "list"]'
 
-        self.posX += num * math.cos(math.radians(self.bearing))
-        self.posY -= num * math.sin(math.radians(self.bearing))
+        self.posX += round(num * math.cos(math.radians(self.bearing)), 1)
+        self.posY -= round(num * math.sin(math.radians(self.bearing)), 1)
+
 
         if self.posX < Turtle.OFFSET:
             self.posX = Turtle.OFFSET
@@ -101,8 +92,8 @@ class Turtle:
         '''Move the Turtle backward by num units.
         backward(num)
         Example: t.backward(100)'''
-        self.posX -= num * math.cos(math.radians(self.bearing))
-        self.posY += num * math.sin(math.radians(self.bearing))
+        self.posX -= round(num * math.cos(math.radians(self.bearing)), 1)
+        self.posY += round(num * math.sin(math.radians(self.bearing)), 1)
 
         if self.posX < Turtle.OFFSET:
             self.posX = Turtle.OFFSET
@@ -123,24 +114,14 @@ class Turtle:
         self.color = color
 
     def printTurtle(self):
-        #print "TURTLE" + " " + str(self.pen) + " " + str(self.color) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change) + " " + str(self.speedVar)
-        #f = DisplayPublisher();
-        #f.publish("IPython.extensions.NewTurtle",{'text' : 'text/plain'});
-
         Turtle.TURTLE_BUFF += str(self.pen) + "," + str(self.color) + "," + str(self.posX) + "," + str(self.posY) + "," + str(self.b_change) + "," + str(self.speedVar) + ",";
 
-      
-       # publish_display_data("IPython.extensions.NewTurtle",{'application/turtle' : jencode})
-#        eg.msgbox(jencode)
-        #publish_display_data("IPython.extensions.NewTurtle",{'application/turtle' : str(self.pen) + " " + str(self.color) + " " + str(self.posX) + " " + str(self.posY) + " " + str(self.b_change) + " " + str(self.speedVar) });
-  
-
-
-
-      
     def circle(self, radius, extent=360):
         temp = self.bearing
         self.b_change = 0;
+        tempSpeed = self.speedVar
+        self.speedVar = 1
+        
         for i in range(0, (extent/2)):
             n = math.fabs(math.radians(self.b_change) * radius)
             if(radius >= 0):
@@ -153,6 +134,7 @@ class Turtle:
             self.bearing = (temp + extent)
         else:
             self.bearing = (temp - extent)
+        self.speedVar = tempSpeed
 
     def home(self):
         '''Move the Turtle to its home position.

@@ -236,18 +236,13 @@ var IPython = (function (IPython) {
 	var json = {};
         var msg_type = json.output_type = msg.header.msg_type;
         var content = msg.content;
-	//alert(msg_type);
         if (msg_type === "stream") {
             json.text = content.data;
             json.stream = content.name;
-	    // alert(json.text);
-	    // alert(json.stream);
         } else if (msg_type === "display_data") {
             json = content.data;
             json.output_type = msg_type;
             json.metadata = content.metadata;
-	    //console.log(json[metadata]);
-	    // alert(msg_type);
         } else if (msg_type === "pyout") {
             json = content.data;
             json.output_type = msg_type;
@@ -339,7 +334,6 @@ var IPython = (function (IPython) {
             this.append_display_data(json);
 	    console.log(json);
 	    alert("JSON TEST");
-	   // alert(json[application/turtle]);
         } else if (json.output_type === 'stream') {
             this.append_stream(json);
         }
@@ -562,17 +556,10 @@ var IPython = (function (IPython) {
                     continue;
                 }
                 var md = json.metadata || {};
-//		console.log(json[type]);
-//		console.log(json[data]);
                 append.apply(this, [json[type], md, element]);
 		console.log(this);
 		console.log(this[outputs[0]]);
-		
-		/*console.log("hello!");
-		console.log(this);
-		console.log(md);
-		console.log(element);*/
-		
+
 		return true;
             }
         }
@@ -606,7 +593,7 @@ var IPython = (function (IPython) {
     
     OutputArea.prototype.append_text = function (data, md, element, extra_class) {
         var type = 'text/plain';
-	var lineCount = getLineCount(data);
+	//	var lineCount = getLineCount(data);
         var toinsert = this.create_output_subarea(md, "output_text", type);
         // escape ANSI & HTML specials in plaintext:
 
@@ -616,101 +603,26 @@ var IPython = (function (IPython) {
         if (extra_class){
             toinsert.addClass(extra_class);
         }
-	// if user imported turtle class create canvas and process requests
-	/*	if(data.search("TURTLE") != -1){
-		var dataSafe = data;
-		var newData = [];
-		var pri = [];
-		var j = 0;
-		var r = [];
-		dataSafe = dataSafe.split("\n");
-		for(var i = 0; i < dataSafe.length; i++){
-		if(dataSafe[i].search("TURTLE") == -1){
-		if( i != dataSafe.length -1){
-		dataSafe[i] += "\n";
-		}
-		newData += dataSafe[i];
-		}
-		else if (dataSafe[i].search("TURTLE") != -1){
-		j = 0;
-		pri = dataSafe[i].split(" ");
-		r.push(pri[j+1]);
-		r.push(pri[j+2]);
-		r.push(pri[j+3]);	
-		r.push(pri[j+4]);
-		r.push(pri[j+5]);	
-		r.push(pri[j+6]);	   
-		}
-		}
-		var lineCount = getLineCount(newData);
-		data = newData;
-		data += "Line Count " + lineCount;
-		toinsert.append($("<pre/>").html(data));
-		
-		var turtleCoordInfo = $('<div\>').addClass('turtle-coordinates');
-		turtleCoordInfo.append(r.join()).hide();
-		toinsert.append(turtleCoordInfo);
-		
-		var buttonDiv = $('<div\>');
-		buttonDiv.attr('target','button-area');
 
-		// create help button 
-		var helpButton = $('<button\>');
-		helpButton.attr('id','help-element');
-		helpButton.append("Help!");
-		buttonDiv.append(helpButton);
-		
-		// create grid button  
-		var gridButton = $('<button\>');
-		gridButton.attr('id','grid-element');
-		gridButton.attr('value','OFF');
-		gridButton.append("Grid On/Off");
-		buttonDiv.append(gridButton);
-		toinsert.append(buttonDiv);
-
-		// Create a canvas and append it to the output_subarea.
-		var canvas = document.createElement('canvas');
-		canvas.id     = "canvas1";
-		canvas.width  = 401;
-		canvas.height = 401;
-		canvas.resize;
-		toinsert.append(canvas);
-		
-		// import the paper.js lib
-		var s = document.createElement("script");
-		s.type = "text/javascript";
-		s.src = "/static/notebook/js/paper.js";
-		toinsert.append(s);
-		
-		// add the javascript contained in myScript.js
-		var q = document.createElement("script");
-		q.type = "text/javascript";
-		q.src = "/static/notebook/js/myScript.js";
-		q.data
-		toinsert.append(q);
-		element.append(toinsert);
-		}*/
-	/*else {*/
-	var lineCount = getLineCount(data);
-	data += "Line Count " + lineCount;
+	//	var lineCount = getLineCount(data);
+	//	data += "Line Count " + lineCount;
         toinsert.append($("<pre/>").html(data));
         element.append(toinsert);
-	/*}*/
     };
     
     
-    function getLineCount(data) {
-	var dataLen = data.length;
-	var i = 0;
-	var j = 0;
-	while(i !== dataLen){
-	    if (data[i] === '\n'){
-		j++;
-	    }
-	    i++;
-	}
-	return j;
-    };
+    /*    function getLineCount(data) {
+	  var dataLen = data.length;
+	  var i = 0;
+	  var j = 0;
+	  while(i !== dataLen){
+	  if (data[i] === '\n'){
+	  j++;
+	  }
+	  i++;
+	  }
+	  return j;
+	  };*/
     
     
     OutputArea.prototype.append_svg = function (svg, md, element) {
@@ -793,8 +705,6 @@ var IPython = (function (IPython) {
 	    document.getElementById('grid-element').remove();
 	}
 	
-	
-	//	    alert(document.getElementById('canvas1'));
 	var toinsert = $('.cell.border-box-sizing.code_cell');
 	var turtleArea = $('<div/>');
 	turtleArea.attr('id','turtle-canvas-area');
@@ -841,167 +751,164 @@ var IPython = (function (IPython) {
 	toinsert.append(q);
 	
 	setData(data);
-
-
-	//	}
     };
     
-	       OutputArea.append_map = {
-		   "text/plain" : OutputArea.prototype.append_text,
-		   "text/html" : OutputArea.prototype.append_html,
-		   "image/svg+xml" : OutputArea.prototype.append_svg,
-		   "image/png" : OutputArea.prototype.append_png,
-		   "image/jpeg" : OutputArea.prototype.append_jpeg,
-		   "text/latex" : OutputArea.prototype.append_latex,
-		   "application/json" : OutputArea.prototype.append_json,
-		   "application/javascript" : OutputArea.prototype.append_javascript,
-		   "application/turtle" : OutputArea.prototype.append_turtle,
-	       };
-	       
+    OutputArea.append_map = {
+	"text/plain" : OutputArea.prototype.append_text,
+	"text/html" : OutputArea.prototype.append_html,
+	"image/svg+xml" : OutputArea.prototype.append_svg,
+	"image/png" : OutputArea.prototype.append_png,
+	"image/jpeg" : OutputArea.prototype.append_jpeg,
+	"text/latex" : OutputArea.prototype.append_latex,
+	"application/json" : OutputArea.prototype.append_json,
+	"application/javascript" : OutputArea.prototype.append_javascript,
+	"application/turtle" : OutputArea.prototype.append_turtle,
+    };
+    
 
-	       OutputArea.prototype.append_raw_input = function (msg) {
-		   var that = this;
-		   this.expand();
-		   var content = msg.content;
-		   var area = this.create_output_area();
-		   
-		   // disable any other raw_inputs, if they are left around
-		   $("div.output_subarea.raw_input").remove();
-		   
-		   area.append(
-		       $("<div/>")
-			   .addClass("box-flex1 output_subarea raw_input")
-			   .append(
-			       $("<span/>")
-				   .addClass("input_prompt")
-				   .text(content.prompt)
-			   )
-			   .append(
-			       $("<input/>")
-				   .addClass("raw_input")
-				   .attr('type', 'text')
-				   .attr("size", 47)
-				   .keydown(function (event, ui) {
-				       // make sure we submit on enter,
-				       // and don't re-execute the *cell* on shift-enter
-				       if (event.which === utils.keycodes.ENTER) {
-					   that._submit_raw_input();
-					   return false;
-				       }
-				   })
-			   )
-		   );
-		   
-		   this.element.append(area);
-		   var raw_input = area.find('input.raw_input');
-		   // Register events that enable/disable the keyboard manager while raw
-		   // input is focused.
-		   IPython.keyboard_manager.register_events(raw_input);
-		   // Note, the following line used to read raw_input.focus().focus().
-		   // This seemed to be needed otherwise only the cell would be focused.
-		   // But with the modal UI, this seems to work fine with one call to focus().
-		   raw_input.focus();
-	       }
+    OutputArea.prototype.append_raw_input = function (msg) {
+	var that = this;
+	this.expand();
+	var content = msg.content;
+	var area = this.create_output_area();
+	
+	// disable any other raw_inputs, if they are left around
+	$("div.output_subarea.raw_input").remove();
+	
+	area.append(
+	    $("<div/>")
+		.addClass("box-flex1 output_subarea raw_input")
+		.append(
+		    $("<span/>")
+			.addClass("input_prompt")
+			.text(content.prompt)
+		)
+		.append(
+		    $("<input/>")
+			.addClass("raw_input")
+			.attr('type', 'text')
+			.attr("size", 47)
+			.keydown(function (event, ui) {
+			    // make sure we submit on enter,
+			    // and don't re-execute the *cell* on shift-enter
+			    if (event.which === utils.keycodes.ENTER) {
+				that._submit_raw_input();
+				return false;
+			    }
+			})
+		)
+	);
+	
+	this.element.append(area);
+	var raw_input = area.find('input.raw_input');
+	// Register events that enable/disable the keyboard manager while raw
+	// input is focused.
+	IPython.keyboard_manager.register_events(raw_input);
+	// Note, the following line used to read raw_input.focus().focus().
+	// This seemed to be needed otherwise only the cell would be focused.
+	// But with the modal UI, this seems to work fine with one call to focus().
+	raw_input.focus();
+    }
 
-	       OutputArea.prototype._submit_raw_input = function (evt) {
-		   var container = this.element.find("div.raw_input");
-		   var theprompt = container.find("span.input_prompt");
-		   var theinput = container.find("input.raw_input");
-		   var value = theinput.val();
-		   var content = {
-		       output_type : 'stream',
-		       name : 'stdout',
-		       text : theprompt.text() + value + '\n'
-		   }
-		   // remove form container
-		   container.parent().remove();
-		   // replace with plaintext version in stdout
-		   this.append_output(content, false);
-		   $([IPython.events]).trigger('send_input_reply.Kernel', value);
-	       }
-
-
-	       OutputArea.prototype.handle_clear_output = function (msg) {
-		   // msg spec v4 had stdout, stderr, display keys
-		   // v4.1 replaced these with just wait
-		   // The default behavior is the same (stdout=stderr=display=True, wait=False),
-		   // so v4 messages will still be properly handled,
-		   // except for the rarely used clearing less than all output.
-		   this.clear_output(msg.content.wait || false);
-	       };
+    OutputArea.prototype._submit_raw_input = function (evt) {
+	var container = this.element.find("div.raw_input");
+	var theprompt = container.find("span.input_prompt");
+	var theinput = container.find("input.raw_input");
+	var value = theinput.val();
+	var content = {
+	    output_type : 'stream',
+	    name : 'stdout',
+	    text : theprompt.text() + value + '\n'
+	}
+	// remove form container
+	container.parent().remove();
+	// replace with plaintext version in stdout
+	this.append_output(content, false);
+	$([IPython.events]).trigger('send_input_reply.Kernel', value);
+    }
 
 
-	       OutputArea.prototype.clear_output = function(wait) {
-		   if (wait) {
-
-		       // If a clear is queued, clear before adding another to the queue.
-		       if (this.clear_queued) {
-			   this.clear_output(false);
-		       };
-
-		       this.clear_queued = true;
-		   } else {
-
-		       // Fix the output div's height if the clear_output is waiting for
-		       // new output (it is being used in an animation).
-		       if (this.clear_queued) {
-			   var height = this.element.height();
-			   this.element.height(height);
-			   this.clear_queued = false;
-		       }
-		       
-		       // clear all, no need for logic
-		       this.element.html("");
-		       this.outputs = [];
-		       this.trusted = true;
-		       this.unscroll_area();
-		       return;
-		   };
-	       };
+    OutputArea.prototype.handle_clear_output = function (msg) {
+	// msg spec v4 had stdout, stderr, display keys
+	// v4.1 replaced these with just wait
+	// The default behavior is the same (stdout=stderr=display=True, wait=False),
+	// so v4 messages will still be properly handled,
+	// except for the rarely used clearing less than all output.
+	this.clear_output(msg.content.wait || false);
+    };
 
 
-	       // JSON serialization
+    OutputArea.prototype.clear_output = function(wait) {
+	if (wait) {
 
-	       OutputArea.prototype.fromJSON = function (outputs) {
-		   var len = outputs.length;
-		   var data;
+	    // If a clear is queued, clear before adding another to the queue.
+	    if (this.clear_queued) {
+		this.clear_output(false);
+	    };
 
-		   for (var i=0; i<len; i++) {
-		       data = outputs[i];
-		       var msg_type = data.output_type;
-		       if (msg_type === "display_data" || msg_type === "pyout") {
-			   // convert short keys to mime keys
-			   // TODO: remove mapping of short keys when we update to nbformat 4
-			   data = this.rename_keys(data, OutputArea.mime_map_r);
-			   data.metadata = this.rename_keys(data.metadata, OutputArea.mime_map_r);
-		       }
-		       
-		       this.append_output(data);
-		   }
-	       };
+	    this.clear_queued = true;
+	} else {
 
-
-	       OutputArea.prototype.toJSON = function () {
-		   var outputs = [];
-		   var len = this.outputs.length;
-		   var data;
-		   for (var i=0; i<len; i++) {
-		       data = this.outputs[i];
-		       var msg_type = data.output_type;
-		       if (msg_type === "display_data" || msg_type === "pyout") {
-			   // convert mime keys to short keys
-			   data = this.rename_keys(data, OutputArea.mime_map);
-			   data.metadata = this.rename_keys(data.metadata, OutputArea.mime_map);
-		       }
-		       outputs[i] = data;
-		   }
-
-		   return outputs;
-	       };
+	    // Fix the output div's height if the clear_output is waiting for
+	    // new output (it is being used in an animation).
+	    if (this.clear_queued) {
+		var height = this.element.height();
+		this.element.height(height);
+		this.clear_queued = false;
+	    }
+	    
+	    // clear all, no need for logic
+	    this.element.html("");
+	    this.outputs = [];
+	    this.trusted = true;
+	    this.unscroll_area();
+	    return;
+	};
+    };
 
 
-	       IPython.OutputArea = OutputArea;
+    // JSON serialization
 
-	       return IPython;
+    OutputArea.prototype.fromJSON = function (outputs) {
+	var len = outputs.length;
+	var data;
 
-	      }(IPython));
+	for (var i=0; i<len; i++) {
+	    data = outputs[i];
+	    var msg_type = data.output_type;
+	    if (msg_type === "display_data" || msg_type === "pyout") {
+		// convert short keys to mime keys
+		// TODO: remove mapping of short keys when we update to nbformat 4
+		data = this.rename_keys(data, OutputArea.mime_map_r);
+		data.metadata = this.rename_keys(data.metadata, OutputArea.mime_map_r);
+	    }
+	    
+	    this.append_output(data);
+	}
+    };
+
+
+    OutputArea.prototype.toJSON = function () {
+	var outputs = [];
+	var len = this.outputs.length;
+	var data;
+	for (var i=0; i<len; i++) {
+	    data = this.outputs[i];
+	    var msg_type = data.output_type;
+	    if (msg_type === "display_data" || msg_type === "pyout") {
+		// convert mime keys to short keys
+		data = this.rename_keys(data, OutputArea.mime_map);
+		data.metadata = this.rename_keys(data.metadata, OutputArea.mime_map);
+	    }
+	    outputs[i] = data;
+	}
+
+	return outputs;
+    };
+
+
+    IPython.OutputArea = OutputArea;
+
+    return IPython;
+
+}(IPython));
