@@ -256,16 +256,41 @@ paper.view.onFrame = function(event) {
 	frameY = (changY/changX);
 	frameX = 1;	
     }
-   	if( changX>changY && Math.abs(oldX-newX)<turtleSpeed ){
-		turtleSpeed=Math.abs(oldX-newX);
+	//alert("changX: " + changX + " chanY: " + changY )
+   	if(((Math.abs(oldX-newX))<turtleSpeed) && changRot==0 && changX!=0){
 		
+		if (((Math.abs(oldX-newX))<=1) && changRot==0 && changX!=0){
+			oldX=newX;
+			oldY=newY;
+		}
+		if (((Math.abs(oldX-newX))<=(turtleSpeed/2)) && changRot==0 && changX!=0){
+			turtleSpeed=1;
+		}
+		turtleSpeed=2;	
 	}
-	if( changY>changX && Math.abs(oldY-newY)<turtleSpeed ){
-		turtleSpeed=Math.abs(oldY-newY);
+
+	if (((Math.abs(oldY-newY))<turtleSpeed) && changRot==0 && changY!=0){	
 		
+		if (((Math.abs(oldY-newY))<=1) && changRot==0 && changY!=0){
+			oldX=newX;			
+			oldY=newY;
+		}
+		if (((Math.abs(oldY-newY))<=(turtleSpeed/2)) && changRot==0 && changY!=0){
+			turtleSpeed=1;
+		}
+		turtleSpeed=2;
+	
 	}
-	if  (changRot>0 && Math.abs(changRot)<turtleSpeed){
-		turtleSpeed=Math.abs(changRot);
+
+	
+	//if( changX<changY && (Math.abs(oldY-newY)-10)<turtleSpeed ){
+	//	turtleSpeed=1;
+		
+	//}
+	
+	else if  (changRot!=0 && (Math.abs(changRot))<turtleSpeed){
+		turtleSpeed=1;
+		
 	}
 	//frameX *= turtleSpeed;
 	//frameY *= turtleSpeed;
@@ -321,6 +346,7 @@ paper.view.onFrame = function(event) {
 
 	if (newY < oldY){
 	    oldY -= (frameY*turtleSpeed);
+		
 	    if(turtleShow==1){
 		turtle.translate(0,(-frameY*turtleSpeed));
 
@@ -330,11 +356,13 @@ paper.view.onFrame = function(event) {
 	
 	// prints the little circles every frame until we reach the correct point
 	// to create the line
+	//alert(" ("+ newY+ ")  "+ oldY+ "  where brooklyn at " +" ("+ newX+ ")  "+ oldX + " speed:"+ turtleSpeed + " changRot:" + changRot);
 	if (newY != oldY || newX != oldX || changRot != 0){
 	    
 	    if(newPen == 1 ){  
 		
 		path.add(new paper.Point(oldX, oldY));
+		turtle.position=new paper.Point(oldX, oldY)
 		path.strokeColor = newColour;
 
 	    }
