@@ -31,14 +31,32 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>Over the past 2 months Nathan, Nic and Jake of the Aspidites team have been working on IPython as a project for a 3rd year Computer Science course. Our goal was to add turtle functionality to IPython using an HTML canvas and Paper.js. We were able to meet our goal within the semester and we are quite happy with the result. There are some bugs and there is plenty of room for new features. We think it came out pretty nicely in the end so we would like to share it with you guys. Once you clone the repository, to start it up just run "python -m IPython notebook" from the command line in the aspidites directory. Then start a new notebook with the following lines and our turtle will appear.</p>
+        <h1>
+<a name="welcome-to-the-official-aspidites-ipython-turtle-implementation-homepage" class="anchor" href="#welcome-to-the-official-aspidites-ipython-turtle-implementation-homepage"><span class="octicon octicon-link"></span></a>Welcome to the official Aspidites IPython Turtle implementation homepage!</h1>
+
+<p>For the last 3 months we have been working on integrating a turtle, similar to the popular python educational tool, into the IPython development environment. </p>
+
+<p>The code is available from the links above for you to check out. 
+From within the aspidites directory run </p>
+
+<p>python -m IPython notebook</p>
+
+<p>To use the turtle click on the turtle icon in the top left corner of your notebook or enter the following command.</p>
 
 <p>from NewTurtle import Turtle<br>t = Turtle()<br>t.forward(100)</p>
 
-<p>Here's a link to a video tutorial on YouTube:</p>
+<p>So far you can use the following turtle commands.</p>
 
-<p>Some of the other turtle commands we've implemented are:
-<br>backward()<br>forward()<br>right()<br>left()<br>circle()<br>penup()<br>pendown()<br>speed()<br>pencolor()</p>
+<p><br>backward()<br>forward()<br>right()<br>left()<br>circle()<br>penup()<br>pendown()<br>speed()<br>pencolor()</p>
+
+<p>If you want to add to, or modify this project here are a few things that will be useful to keep in mind. </p>
+
+<ol>
+<li><p>The changes are primarily located in "IPython/html/static/notebook/js/outputarea.js", "/IPython/extensions/NewTurtle.py", "IPython/html/static/notebook/js/myScript.js".</p></li>
+<li><p>We have created a mime type called "turtle-text" and a function that receives it called "append_turtle" in outputarea.js.</p></li>
+<li><p>The Turtle commands are sent as a string of characters that are exported when the "run cell" button is pressed. You can get the details in the NewTurtle.py module.</p></li>
+<li><p>The commands are parsed and drawn using the paper.js library from within the myScript.js file.</p></li>
+</ol><p>Here's a link to a video tutorial on YouTube:</p>
       </section>
     </div>
 
