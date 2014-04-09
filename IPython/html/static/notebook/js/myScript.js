@@ -259,26 +259,26 @@ paper.view.onFrame = function(event) {
 	//alert("changX: " + changX + " chanY: " + changY )
    	if(((Math.abs(oldX-newX))<turtleSpeed) && changRot==0 && changX!=0){
 		
-		if (((Math.abs(oldX-newX))<=1) && changRot==0 && changX!=0){
+		if (((Math.abs(oldX-newX))<=2) && changRot==0 && changX!=0){
 			oldX=newX;
 			oldY=newY;
 		}
-		if (((Math.abs(oldX-newX))<=(turtleSpeed/2)) && changRot==0 && changX!=0){
-			turtleSpeed=1;
-		}
-		turtleSpeed=2;	
+		//if (((Math.abs(oldX-newX))<=(turtleSpeed/2)) && changRot==0 && changX!=0){
+		//	turtleSpeed=(Math.abs(oldX-newX));
+		//}
+		turtleSpeed=(Math.abs(oldX-newX));	
 	}
 
 	if (((Math.abs(oldY-newY))<turtleSpeed) && changRot==0 && changY!=0){	
 		
-		if (((Math.abs(oldY-newY))<=1) && changRot==0 && changY!=0){
+		if (((Math.abs(oldY-newY))<=2) && changRot==0 && changY!=0){
 			oldX=newX;			
 			oldY=newY;
 		}
-		if (((Math.abs(oldY-newY))<=(turtleSpeed/2)) && changRot==0 && changY!=0){
-			turtleSpeed=1;
-		}
-		turtleSpeed=2;
+		//if (((Math.abs(oldY-newY))<=(turtleSpeed/2)) && changRot==0 && changY!=0){
+		//	turtleSpeed=(Math.abs(oldX-newX));
+		//}
+		turtleSpeed=(Math.abs(oldX-newX));
 	
 	}
 
