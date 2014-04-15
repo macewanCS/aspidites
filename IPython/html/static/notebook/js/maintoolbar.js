@@ -23,7 +23,7 @@ var IPython = (function (IPython) {
     MainToolBar.prototype = new IPython.ToolBar(); 
 
     MainToolBar.prototype.construct = function () {
-	this.add_buttons_group([
+        this.add_buttons_group([
                 {
                     id : 'save_b',
                     label : 'Save and Checkpoint',
@@ -115,11 +115,11 @@ var IPython = (function (IPython) {
                     id : 'repeat_b',
                     label : 'Restart Kernel',
                     icon : 'icon-repeat',
-		    value : 'off',
+                    value : 'off',
                     callback : function () {
                         IPython.notebook.restart_kernel();
                         }
-                }	    
+                }
             ],'run_int');
     };
 
